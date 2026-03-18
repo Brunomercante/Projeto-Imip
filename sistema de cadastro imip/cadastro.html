@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma IMIP - Alfabetização</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4b7bec;
+            --success: #05c46b;
+            --warning: #ffd32a;
+            --bg: #f0f4f8;
+            --text: #2d3436;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        /* TELA DE AUTENTICAÇÃO (LOGIN/REGISTRO) */
+        #auth-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, var(--primary), #3867d6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .auth-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+
+        .auth-card h2 { margin-bottom: 0.5rem; color: var(--primary); }
+        .auth-card p { margin-bottom: 1.5rem; color: #666; font-size: 0.9rem; }
+
+        .input-group { margin-bottom: 1.2rem; text-align: left; }
+        .input-group label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.85rem; }
+        .input-group input, .input-group select {
+            width: 100%; padding: 0.85rem; border: 2px solid #eee; border-radius: 0.6rem;
+            outline: none; transition: 0.3s;
+        }
+        .input-group input:focus { border-color: var(--primary); }
+
+        .btn-main {
+            width: 100%; padding: 1rem; background: var(--success); color: white;
+            border: none; border-radius: 0.6rem; font-weight: bold; cursor: pointer;
+            font-size: 1rem; transition: 0.3s;
+        }
+        .btn-main:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .toggle-auth { margin-top: 1.5rem; font-size: 0.85rem; }
+        .toggle-auth a { color: var(--primary); text-decoration: none; font-weight: bold; }
+
+        /* DASHBOARDS (Ocultos inicialmente) */
+        .container { display: none; padding: 2.5rem; max-width: 1100px; margin: auto; }
+        
+        /* Estilos do Aluno */
+        .student-ui { font-family: 'Quicksand', sans-serif; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .badge { background: var(--warning); padding: 0.6rem 1.2rem; border-radius: 2rem; font-weight: bold; box-shadow: 0 4px 0 #e1b100; }
+
+        .progress-bar { background: #ddd; height: 1.5rem; border-radius: 1rem; overflow: hidden; margin: 1.5rem 0; }
+        .progress-fill { background: var(--success); height: 100%; width: 45%; transition: 1.5s ease-out; }
+
+        .grid-games { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .card {
+            background: white; padding: 2.5rem; border-radius: 1.2rem; text-align: center;
+            cursor: pointer; transition: 0.3s; color: white; box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card:hover { transform: scale(1.03); }
+        .card-1 { background: #ffa801; }
+        .card-2 { background: #0fbcf9; }
+        .card-3 { background: #05c46b; }
+
+        /* Estilos do Professor */
+        .teacher-ui table { width: 100%; border-collapse: collapse; background: white; border-radius: 0.8rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .teacher-ui th, .teacher-ui td { padding: 1.2rem; text-align: left; border-bottom: 1px solid #eee; }
+        .teacher-ui th { background: #f8f9fa; color: #777; font-size: 0.8rem; text-transform: uppercase; }
+
+        .status-tag { padding: 0.3rem 0.8rem; border-radius: 0.4rem; font-size: 0.75rem; font-weight: bold; background: #e3fcef; color: #0a5b32; }
+
+        .btn-logout { margin-top: 3rem; background: #eee; border: none; padding: 0.6rem 1.2rem; border-radius: 0.5rem; cursor: pointer; font-weight: 600; color: #555; }
+    </style>
+</head>
+<body>
+
+    <div id="auth-screen">
+        <div class="auth-card">
+            <h2 id="auth-title">Entrar no IMIP</h2>
+            <p id="auth-subtitle">Use suas credenciais para acessar.</p>
+            
+            <form id="authForm">
+                <div class="input-group">
+                    <label>Nome completo / Usuário</label>
+                    <input type="text" id="username" placeholder="Ex: João Silva" required>
+                </div>
+                
+                <div id="register-fields" style="display: none;">
+                    <div class="input-group">
+                        <label>E-mail (Para Professores)</label>
+                        <input type="email" id="email" placeholder="email@exemplo.com">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Quem é você?</label>
+                    <select id="role">
+                        <option value="aluno">Sou Aluno (Paciente)</option>
+                        <option value="professor">Sou Professor / Extensionista</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="btn-submit" class="btn-main">Entrar no Sistema</button>
+            </form>
+
+            <div class="toggle-auth">
+                <span id="toggle-msg">Não tem uma conta?</span> 
+                <a href="javascript:void(0)" id="toggle-link" onclick="toggleMode()">Cadastre-se</a>
+            </div>
+        </div>
+    </div>
+
+    <main id="aluno-dashboard" class="container student-ui">
+        <header class="header">
+            <div>
+                <h1>Olá, Pequeno Herói! 👋</h1>
+                <p style="color: #666;">Pronto para o desafio de hoje?</p>
+            </div>
+            <div class="badge">Nível 5 🏆</div>
+        </header>
+        
+        <p><strong>Missão do Dia:</strong> Complete o alfabeto</p>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+        <div class="grid-games">
+            <div class="card card-1" onclick="alert('Iniciando: Jogo das Vogais Mágicas')">
+                <h1 style="font-size: 4rem; margin-bottom: 1rem;">🅰️</h1>
+                <h3>Vogais Mágicas</h3>
+            </div>
+            <div class="card card-2" onclick="alert('Iniciando: O Som das Letras')">
+                <h1 style="font-size: 4rem; margin-bottom: 1rem;">🎧</h1>
+                <h3>Som das Letras</h3>
+            </div>
+            <div class="card card-3" onclick="alert('IA: Criando sua história personalizada...')">
+                <h1 style="font-size: 4rem; margin-bottom: 1rem;">🤖</h1>
+                <h3>Minha História IA</h3>
+            </div>
+        </div>
+        <button onclick="logout()" class="btn-logout">← Sair do Sistema</button>
+    </main>
+
+    <main id="professor-dashboard" class="container teacher-ui">
+        <header class="header">
+            <h1>Relatório de Pacientes</h1>
+            <button onclick="alert('📈 Analisando dados do subsistema pedagógico...')" class="btn-main" style="width: auto;">Exportar KPIs</button>
+        </header>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome do Paciente</th>
+                    <th>Engajamento</th>
+                    <th>Estado Emocional</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Criança Lucas</td>
+                    <td><strong>92%</strong> (Nível 4)</td>
+                    <td>😊 Radiante</td>
+                    <td><span class="status-tag">Em Atividade</span></td>
+                </tr>
+                <tr>
+                    <td>Criança Sofia</td>
+                    <td><strong>45%</strong> (Nível 2)</td>
+                    <td>😐 Estável</td>
+                    <td><span class="status-tag">Em Atividade</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="logout()" class="btn-logout">← Sair do Sistema</button>
+    </main>
+
+    <script>
+        let isLoginMode = true;
+
+        function toggleMode() {
+            isLoginMode = !isLoginMode;
+            
+            const title = document.getElementById('auth-title');
+            const subtitle = document.getElementById('auth-subtitle');
+            const btnSubmit = document.getElementById('btn-submit');
+            const toggleMsg = document.getElementById('toggle-msg');
+            const toggleLink = document.getElementById('toggle-link');
+            const registerFields = document.getElementById('register-fields');
+
+            if (isLoginMode) {
+                title.innerText = "Entrar no IMIP";
+                subtitle.innerText = "Use suas credenciais para acessar.";
+                btnSubmit.innerText = "Entrar no Sistema";
+                toggleMsg.innerText = "Não tem uma conta?";
+                toggleLink.innerText = "Cadastre-se";
+                registerFields.style.display = "none";
+            } else {
+                title.innerText = "Criar Nova Conta";
+                subtitle.innerText = "Preencha os dados para começar.";
+                btnSubmit.innerText = "Finalizar Cadastro";
+                toggleMsg.innerText = "Já possui uma conta?";
+                toggleLink.innerText = "Fazer Login";
+                registerFields.style.display = "block";
+            }
+        }
+
+        document.getElementById('authForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const user = document.getElementById('username').value;
+            const role = document.getElementById('role').value;
+
+            if (!isLoginMode) {
+                alert(`Sucesso! Bem-vindo(a), ${user}. Sua conta de ${role} foi criada.`);
+            }
+
+            document.getElementById('auth-screen').style.display = 'none';
+
+            if (role === 'aluno') {
+                document.getElementById('aluno-dashboard').style.display = 'block';
+            } else {
+                document.getElementById('professor-dashboard').style.display = 'block';
+            }
+        });
+
+        function logout() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
