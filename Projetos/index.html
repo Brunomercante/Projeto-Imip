@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Alfabetização IMIP</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="main-nav">
+        <button onclick="mostrarSecao('aluno')" class="btn-nav">Visão Aluno</button>
+        <button onclick="mostrarSecao('professor')" class="btn-nav">Visão Professor</button>
+    </nav>
+
+    <main id="secao-aluno" class="student-section">
+        <header class="header">
+            <h1>Olá, Pequeno Herói! 👋</h1>
+            <div class="badge">Nível 5 🏆</div>
+        </header>
+
+        <section class="progress-container">
+            <p>Seu progresso de hoje:</p>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 70%;"></div>
+            </div>
+        </section>
+
+        <div class="grid-games">
+            <div class="card card--orange" onclick="jogar('As Vogais')">
+                <span class="icon">🅰️</span>
+                <h3>As Vogais</h3>
+            </div>
+            <div class="card card--blue" onclick="jogar('Sons das Letras')">
+                <span class="icon">🎧</span>
+                <h3>Sons das Letras</h3>
+            </div>
+            <div class="card card--green" onclick="jogar('Minha História')">
+                <span class="icon">📖</span>
+                <h3>Minha História</h3>
+            </div>
+        </div>
+    </main>
+
+    <aside id="secao-professor" class="teacher-section" style="display:none;">
+        <header class="header">
+            <h2>Painel do Educador</h2>
+            <button class="btn-report" onclick="verDesempenhoGeral()">Ver Desempenho Geral</button>
+        </header>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Aluno</th>
+                    <th>Último Acesso</th>
+                    <th>Desempenho (KPI)</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>João Silva</td>
+                    <td>10/03/2026</td>
+                    <td>85% acerto</td>
+                    <td><span class="tag tag--active">Ativo</span></td>
+                </tr>
+                <tr>
+                    <td>Maria Oliveira</td>
+                    <td>09/03/2026</td>
+                    <td>92% acerto</td>
+                    <td><span class="tag tag--active">Ativo</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </aside>
+
+    <script src="script.js"></script>
+</body>
+</html>

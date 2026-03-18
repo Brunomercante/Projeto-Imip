@@ -1,0 +1,150 @@
+/* Configurações Globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+/* --- ESTILOS DO ALUNO --- */
+.student-section {
+    font-family: 'Quicksand', sans-serif;
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.student-section h1 { color: #2d3436; }
+
+.badge {
+    background: #ffd32a;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+}
+
+.progress-container p { margin-bottom: 10px; font-weight: 600; }
+
+.progress-bar {
+    background: #e0e0e0;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.progress-fill {
+    background: #05c46b;
+    height: 100%;
+    transition: width 0.5s ease;
+}
+
+.grid-games {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    padding: 40px 20px;
+    border-radius: 15px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.card:hover { transform: translateY(-5px); }
+.card--orange { background: #ffa801; }
+.card--blue   { background: #0fbcf9; }
+.card--green  { background: #05c46b; }
+
+.icon { font-size: 3rem; display: block; margin-bottom: 10px; }
+
+/* --- ESTILOS DO PROFESSOR --- */
+.teacher-section {
+    margin-top: 50px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    border-left: 8px solid #4b7bec;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.data-table th, .data-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.data-table th { background: #f8f9fa; color: #777; font-size: 0.9rem; }
+
+.tag {
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.tag--active { background: #d1fae5; color: #065f46; }
+
+.btn-report {
+    background: #4b7bec;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.divider { margin: 40px 0; border: 0; border-top: 2px dashed #ccc; }
+.main-nav {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 30px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.btn-nav {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #4b7bec;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-nav:hover {
+    background: #3867d6;
+    transform: translateY(-2px);
+}
+
+.card {
+    cursor: pointer;
+    user-select: none;
+}
